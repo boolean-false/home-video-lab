@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: home-video-lab
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: waitress-serve --listen=0.0.0.0:$PORT --threads=2 app:app
+    healthCheckPath: /api/films/

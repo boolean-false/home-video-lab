@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Домашняя видеотека</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 1050px; margin: 25px auto; padding: 0 15px; }
+    table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+    th, td { border: 1px solid #999; padding: 7px; text-align: left; }
+    input, select, button { font-size: 14px; padding: 4px; }
+    label { display: inline-block; margin: 5px 10px 5px 0; }
+    input { width: 140px; }
+    #message { min-height: 20px; }
+    .table-wrap { overflow-x: auto; }
+  </style>
+</head>
+<body>
+<h1>Домашняя видеотека</h1>
+<p><a href="/docs/">Документация API (Swagger)</a></p>
+<p>Учебные записи. После перезапуска сервиса список восстанавливается.</p>
+<form id="film-form">
+  <fieldset>
+    <legend id="form-title">Добавить фильм</legend>
+    <label>Название <input name="title" required maxlength="100"></label>
+    <label>Жанр <input name="genre" required maxlength="40"></label>
+    <label>Год <input name="year" type="number" min="1888" max="2100" required></label>
+    <label>Минуты <input name="duration" type="number" min="1" max="1000" required></label>
+    <label>Оценка <input name="rating" type="number" min="0" max="10" step="0.1" required></label>
+    <button type="submit">Сохранить</button>
+    <button type="button" id="cancel">Отмена</button>
+  </fieldset>
+</form>
+<p id="message" role="status"></p>
+<label>Сортировать по <select id="sort">
+  <option value="id">Номеру</option><option value="title">Названию</option>
+  <option value="genre">Жанру</option><option value="year">Году</option>
+  <option value="duration">Длительности</option><option value="rating">Оценке</option>
+</select></label>
+<label>Порядок <select id="order"><option value="asc">По возрастанию</option><option value="desc">По убыванию</option></select></label>
+<button id="refresh">Обновить</button>
+<div class="table-wrap"><table>
+  <thead><tr><th>№</th><th>Название</th><th>Жанр</th><th>Год</th><th>Минуты</th><th>Оценка</th><th>Действия</th></tr></thead>
+  <tbody id="films"></tbody>
+</table></div>
+<h2>Статистика</h2>
+<label>Поле <select id="field"><option value="duration">Длительность</option><option value="year">Год</option><option value="rating">Оценка</option><option value="id">Номер</option></select></label>
+<p id="stats"></p>
+<script src="/static/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+Лабораторная работа 2. Домашняя видеотека.
+Артюхов Данила Андреевич. Вариант 16.
+
+Запуск в Windows:
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe app.py
+
+Страница: http://127.0.0.1:8037/
+Swagger: http://127.0.0.1:8037/docs/
+Список: http://127.0.0.1:8037/api/films/
+
+Можно добавлять, изменять и удалять фильмы, сортировать записи и считать статистику.
+Все записи учебные. Список хранится в памяти и возвращается к исходному состоянию при перезапуске.
+
+Примеры из главы 3 запускаются отдельно:
+python examples/flasgger_example.py
+http://127.0.0.1:8038/apidocs/
+python examples/restx_example.py
+http://127.0.0.1:8039/docs/
+
+Вместо Flask-RESTPlus используется его продолжение Flask-RESTX.
+Проверки: python -m unittest discover -s tests -v
+
+Размещение на Render: Web Service, бесплатный тариф Free.
+Build Command: pip install -r requirements.txt
+Start Command: waitress-serve --listen=0.0.0.0:$PORT --threads=2 app:app
+Для этого учебного сервиса секретные переменные не нужны. PORT задает площадка.

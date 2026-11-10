@@ -42,7 +42,9 @@ async function loadFilms() {
         row.insertCell().textContent = film[key];
       }
       const actions = row.insertCell();
+      actions.className = 'text-nowrap';
       const edit = document.createElement('button');
+      edit.className = 'btn btn-sm btn-outline-primary';
       edit.textContent = 'Изменить';
       edit.onclick = () => {
         selectedId = film.id;
@@ -50,6 +52,7 @@ async function loadFilms() {
         document.getElementById('form-title').textContent = 'Изменить фильм № ' + film.id;
       };
       const remove = document.createElement('button');
+      remove.className = 'btn btn-sm btn-outline-danger';
       remove.textContent = 'Удалить';
       remove.onclick = async () => {
         try {

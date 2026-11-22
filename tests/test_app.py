@@ -100,7 +100,7 @@ class FilmTests(unittest.TestCase):
         self.assertEqual(spec['swagger'],'2.0')
         self.assertEqual(spec['basePath'],'/api')
         self.assertEqual(set(spec['paths']['/films/']),{'get','post'})
-        self.assertEqual(set(spec['paths']['/films/{film_id}']),{'parameters','get','put','delete'})
+        self.assertEqual(set(spec['paths']['/films/{film_id}']),{'parameters','get','put','patch','delete'})
         self.assertIn('/films/stats',spec['paths'])
 
 
@@ -132,3 +132,4 @@ class ChapterExamples(unittest.TestCase):
 
 if __name__=='__main__':
     unittest.main()
+

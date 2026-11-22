@@ -45,11 +45,15 @@ def reset_data():
     next_id = 4
 
 
-def read_film():
+def read_film(current=None):
     """Проверяем данные до изменения списка."""
     if not request.is_json:
         ns.abort(415, 'Нужен Content-Type: application/json.')
     data = request.get_json(silent=True)
+    if current is not None:
+        if not isinstance(data, dict) or not data or set(data) - set(names[1:]):
+            ns.abort(400, 'Укажите поля фильма для изменения.')
+        data = {**{key: current[key] for key in names[1:]}, **data}
     if not isinstance(data, dict) or set(data) != set(names[1:]):
         ns.abort(400, 'Нужны только поля title, genre, year, duration, rating.')
     for key, limit in [('title', 100), ('genre', 40)]:
@@ -134,6 +138,14 @@ class FilmItem(Resource):
             film.update(data)
             return film.copy()
 
+    @ns.marshal_with(film_model)
+    def patch(self, film_id):
+        """Изменить только переданные поля фильма."""
+        with lock:
+            film = find_film(film_id)
+            film.update(read_film(film))
+            return film.copy()
+
     @ns.response(204, 'Фильм удален')
     def delete(self, film_id):
         """Удалить фильм по номеру."""
@@ -160,8 +172,11 @@ class Statistics(Resource):
                     mean=round(sum(values) / len(values), 4) if values else None)
 
 
+from verification import register_verification
+register_verification(app)
 reset_data()
 
 if __name__ == '__main__':
     from waitress import serve
     serve(app, host='127.0.0.1', port=int(os.environ.get('PORT', '8037')), threads=2)
+
